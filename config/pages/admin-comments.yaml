@@ -1,13 +1,13 @@
-# The tags an essay can carry. Add one from the grid's own New record button;
-# a tag in use cannot be deleted without first removing it from its posts.
-name: admin-tags
-path: /admin/tags
+# What readers wrote. A comment arrives Held; open it and set it to Approved to
+# put it under its essay, or delete it.
+name: admin-comments
+path: /admin/comments
 access:
   require: [admin]
   redirectTo: /admin/login
 meta:
-  title: Tags · Field Notes
-  description: The tags an essay can carry.
+  title: Comments · Field Notes
+  description: The comments readers wrote, held until you approve them.
 components:
   - type: container
     props:
@@ -27,20 +27,23 @@ components:
                 element: h1
                 props:
                   className: text-[15px] font-semibold text-foreground
-                content: Tags
+                content: Comments
           - type: container
             props:
               className: flex min-w-0 flex-col gap-3 px-5 pb-5 pt-4
             children:
               - type: table
                 dataSource:
-                  table: tags
+                  table: comments
                   sort:
-                    - { field: name, direction: asc }
+                    - { field: posted_at, direction: desc }
                 rowHeight: short
                 columns:
-                  - { field: name, label: Name }
-                  - { field: slug, label: Slug }
+                  - { field: author_name, label: Name }
+                  - { field: body, label: Comment }
+                  - { field: post, label: Essay }
+                  - { field: status, label: Status }
+                  - { field: posted_at, label: Written, format: short-date }
                 pagination:
                   pageSize: 50
-                emptyMessage: Tags say what an essay is about. Add the first one with New record.
+                emptyMessage: Comments readers leave under an essay wait here until you approve them.
